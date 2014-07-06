@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Swallow-table Demo</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery-swallow-table.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#info-table').swallow_table(
+			{'url': 'service/data.html', 'page_selector': '#page', 'custom_key': 'custom_value'},
+			function(data){
+				var content = '';
+				for(var i = 0, len = data.content.length; i < len; i++){
+					content += '<tr>';
+					content += '<td>'+data.content[i].a+'</td>';
+					content += '<td>'+data.content[i].b+'</td>';
+					content += '<td>'+data.content[i].c+'</td>';
+					content += '<td>'+data.content[i].d+'</td>';
+					content += '</tr>';
+				}
+				$('#info-table tbody').html(content);
+			}
+		);
+		$('#info-table').swallow_table('onload', function(data, type) {
+			console.log(type);
+			return false;
+		});
+	});
+</script>
+</head>
+
+<body>
+    <table id="info-table" class="swallow-table2">
+    	<thead>
+        	<tr>
+                <th width="25%" sort="A" sort-default>A</th>
+            	<th width="25%" sort="B">B</th>
+            	<th width="25%">C</th>
+            	<th width="25%">D</th>
+            </tr>
+        </thead>
+    	<tbody>
+        </tbody>
+    </table>
+    <div id="page" style="margin:5px 10px;text-align:right"></div>
+</body>
+</html>
