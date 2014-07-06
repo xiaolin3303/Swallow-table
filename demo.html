@@ -24,9 +24,17 @@
 			}
 		);
 		$('#info-table').swallow_table('onload', function(data, type) {
+			//函数传入两个参数，data为后台返回的完整数据，type为是否成功标志，有success和error两种状态
+			//如果后台数据返回失败插件会弹出默认对话框，如果想禁用默认行为，请return false
 			console.log(type);
 			return false;
 		});
+
+		/*
+		//设置自定义参数，设置参数表格内容不会自动刷新，需要手动执行refresh方法
+		$('#info-table').swallow_table('setting', {'custom_key': 'custom_value', 'another_custom_key': 'another_custom_value'});
+		$('#info-table').swallow_table('refresh');
+		*/
 	});
 </script>
 </head>
