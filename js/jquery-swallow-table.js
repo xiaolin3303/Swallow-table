@@ -84,7 +84,7 @@
 						pageInfo.now = option.page;
 						pageInfo.total = data.total;
 						pageInfo.pageSize = option.rows;
-						console.log(pageInfo);
+
 						if(pageInfo.now == 1){
 							$('.page-prev', page_ele).addClass('disabled');
 						}else{
