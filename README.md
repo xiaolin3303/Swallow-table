@@ -10,7 +10,7 @@
 *   <code>page</code> 当前页码（可选，默认1）
 *   <code>用户自定义参数</code> swallow-table请求后台数据时会发送用户自定义的参数
 
-> rows, page以及用户自定义参数会向后台请求数据时作为参数发送
+> rows, page以及用户自定义参数会向后台请求数据时(POST方式)作为参数发送
 
 ### 方法method
 
