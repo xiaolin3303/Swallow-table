@@ -5,6 +5,7 @@
 ### 参数option
 
 *   <code>url</code> 后台服务地址，swallow-table会向这个地址发起请求,获取数据
+*   <code>method</code> 发起AJAX请求的方式，取值为POST或GET，默认为POST
 *   <code>page_selector</code> 一个有效的jquery选择器，例如#page，swallow-table会在该容器中自动填充页码信息及翻页组件
 *   <code>rows</code> 每页显示条目数（可选，默认20）
 *   <code>page</code> 当前页码（可选，默认1）
