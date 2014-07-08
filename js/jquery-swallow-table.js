@@ -1,5 +1,5 @@
 /*!
- * Swallow-table v1.0
+ * Swallow-table v1.1
  *
  * Contact: https://github.com/xiaolin3303
  * 2014-07-06
@@ -24,7 +24,8 @@
 		var pageInfo = {'now': null, 'total': null, 'pageSize': null};
 		var opt = $.extend({
 						'rows': 20,
-						'page': 1
+						'page': 1,
+						'method': 'post'
 					}, option);
 		if($('.swallow-page', opt.page_selector).size() == 0){
 			var page_ele = $('<span>转到：<input class="change-page" type="text" style="width:30px;padding:2px 5px" value="1" /></span><span class="page-info" style="margin-left:8px">N/A</span><span class="clearfix rt" style="display:inline-block;top:5px;position:relative;margin-left:8px"><ul class="swallow-page"><li class="page-prev"><div class="Rob"></div></li><li class="page-next"><div class="hnb"></div></li></ul></span>');
@@ -74,12 +75,16 @@
 		var getInfo = function(option, _callback){
 			var _option = $.extend(true, {}, option);
 			delete _option.url;
+			delete _option.method;
 			delete _option.page_selector;
-			delete _option.onload;			
-			$.post(
-				option.url,
-				_option,
-				function(data){
+			delete _option.onload;		
+
+			$.ajax({
+				'url': option.url,
+				'type': option.method,
+				'data': _option,
+				'dataType': 'json',
+				'success': function(data) {
 					if(data.success){
 						pageInfo.now = option.page;
 						pageInfo.total = data.total;
@@ -101,15 +106,21 @@
 						}
 					}else{
 						if(typeof option.onload === 'function') {
-							if(option.onload(data, 'error') !== false) {
+							if(option.onload(data, 'data_error') !== false) {
 								alert('获取数据出错，请稍后重试');
 							}
 						}
 					}
 				},
-				'json'
-			);
-		}
+				'error': function(jqXHR, textStatus, errorThrown) {
+					if(typeof option.onload === 'function') {
+						if(option.onload({}, 'network_server_error') !== false) {
+							alert('获取数据出错，请稍后重试');
+						}
+					}
+				}
+			});
+		};
 		var insertPageInfo = function(data){
 			if(data.total){
 				$('.page-info', $(opt.page_selector)).text('第'+((pageInfo.now-1)*pageInfo.pageSize+1)+'-'+(Math.min(pageInfo.total, pageInfo.now*pageInfo.pageSize))+'项，共'+pageInfo.total+'项');
@@ -118,7 +129,7 @@
 				$('.page-info', $(opt.page_selector)).text('N/A');
 				$('.change-page', $(opt.page_selector)).val(1);
 			}
-		}
+		};
 		getInfo(opt, function(data){
 			callback(data);
 			insertPageInfo(data);
