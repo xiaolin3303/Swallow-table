@@ -24,7 +24,8 @@
 			}
 		);
 		$('#info-table').swallow_table('onload', function(data, type) {
-			//函数传入两个参数，data为后台返回的完整数据，type为是否成功标志，有success和error两种状态
+			//函数传入两个参数，data为后台返回的完整数据，type为是否成功标志
+			//其中type有success(http:200,data.success:true),data_error(http:200,data.success:false)和network_server_error(AJAX请求出错)三种取值
 			//如果后台数据返回失败插件会弹出默认对话框，如果想禁用默认行为，请return false
 			console.log(type);
 			return false;
